@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shree — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="icon.jpg" type="image/x-icon">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #F4F3EE;
+    --ink: #1A1917;
+    --ink-light: #3A3835;
+    --ink-faint: #8A8783;
+    --accent: #2B4A36;
+    --accent-light: #3D6B4F;
+    --sepia: #8A7A65;
+    --grid: #E2DFD8;
+    --rule: #C8C4BB;
+    --mono: 'Space Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  html[data-theme="dark"] {
+    --paper: #141412;
+    --ink: #E8E6E0;
+    --ink-light: #B8B5AE;
+    --ink-faint: #6A6763;
+    --accent: #5A9E70;
+    --accent-light: #72B888;
+    --sepia: #8A7A65;
+    --grid: #222220;
+    --rule: #2E2C29;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.65;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-attachment: fixed;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .nav-mark {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+  }
+
+  nav ul li a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  nav ul li a:hover { color: var(--accent); }
+
+  /* ─── THEME TOGGLE ─── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .theme-toggle svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ─── PAGE WRAPPER ─── */
+  .page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    padding-top: 48px;
+  }
+
+  /* ─── TITLE BLOCK DIVIDER ─── */
+  .title-block {
+    border: 1px solid var(--rule);
+    border-top: 2.5px solid var(--ink);
+    margin: 3.5rem 0 2rem;
+    display: flex;
+    align-items: stretch;
+    background: transparent;
+  }
+
+  .title-block .tb-label {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
+    flex-shrink: 0;
+  }
+
+  .title-block .tb-content {
+    padding: 5px 16px;
+    border-left: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .title-block .tb-right {
+    margin-left: auto;
+    padding: 5px 14px;
+    border-left: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 5rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--sepia);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+
+  .hero-title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 1.15rem;
+    color: var(--ink-light);
+    margin-bottom: 2.5rem;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    padding: 8px 16px;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    background: rgba(244,243,238,0.7);
+  }
+
+  html[data-theme="dark"] .hero-link {
+    background: rgba(20,20,18,0.7);
+  }
+
+  .hero-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(43,74,54,0.05);
+  }
+
+  .hero-link svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--ink-light);
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .about-text strong { color: var(--ink); font-weight: 600; }
+
+  .about-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .about-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-left: 2px solid var(--accent);
+    padding: 4px 0 4px 10px;
+  }
+
+  .about-tag span {
+    display: block;
+    color: var(--ink-light);
+    margin-top: 1px;
+    text-transform: none;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── PORTFOLIO ─── */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--rule);
+  }
+
+  .portfolio-card {
+    display: block;
+    text-decoration: none;
+    padding: 1.6rem 1.4rem;
+    border: 1px solid transparent;
+    background: rgba(244,243,238,0.4);
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+    cursor: pointer;
+  }
+
+  html[data-theme="dark"] .portfolio-card {
+    background: rgba(20,20,18,0.4);
+  }
+
+  .portfolio-card:hover {
+    background: rgba(43,74,54,0.04);
+    border-color: var(--accent);
+    z-index: 1;
+  }
+
+  .pc-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .pc-title {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pc-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .pc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .pc-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(43,74,54,0.3);
+    padding: 2px 7px;
+  }
+
+  .pc-arrow {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--rule);
+    transition: color 0.15s, transform 0.15s;
+  }
+
+  .portfolio-card:hover .pc-arrow {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+
+  /* ─── RESUME ─── */
+  .resume-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid var(--rule);
+    flex-wrap: wrap;
+    gap: 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .resume-bar:hover {
+    border-color: var(--accent);
+    background: rgba(43,74,54,0.03);
+  }
+
+  .resume-info {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+  }
+
+  .resume-info strong {
+    display: block;
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-bottom: 2px;
+    font-weight: 700;
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid var(--ink);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    cursor: pointer;
+  }
+
+  .dl-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .dl-btn svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+  }
+
+  .dl-btn-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: transparent;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+  }
+
+  .dl-btn-small:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  .dl-btn-small svg {
+    width: 11px;
+    height: 11px;
+    fill: currentColor;
+  }
+
+  /* ─── PHOTOS ─── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    border: 1px solid var(--rule);
+  }
+
+  .photo-slot {
+    aspect-ratio: 3/4;
+    background: rgba(43,74,54,0.04);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .photo-slot:hover { border-color: var(--rule); }
+
+  .photo-slot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  .photo-slot .slot-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    text-align: center;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .photo-slot .slot-icon {
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .photo-slot .slot-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--rule);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .photo-slot .slot-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 4px 8px;
+    background: rgba(26,25,23,0.72);
+    font-family: var(--mono);
+    font-size: 9px;
+    color: rgba(244,243,238,0.85);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: none;
+    z-index: 2;
+  }
+
+  /* photo hover expand icon */
+  .photo-slot .slot-expand {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    background: rgba(26,25,23,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .photo-slot:hover .slot-expand { opacity: 1; }
+
+  .photo-slot .slot-expand svg {
+    width: 13px;
+    height: 13px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* ─── PHOTO POPUP ─── */
+  .photo-popup-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,25,23,0.82);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .photo-popup-backdrop.open { display: flex; }
+
+  .photo-popup-box {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .photo-popup-box img {
+    display: block;
+    max-width: 88vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border: 1px solid var(--rule);
+  }
+
+  .photo-popup-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 10px;
+    background: rgba(26,25,23,0.7);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(244,243,238,0.85);
+  }
+
+  .photo-popup-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+
+  .photo-popup-close:hover { background: var(--accent); }
+
+  /* ─── HISTORY ─── */
+  .history-entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0 2.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--grid);
+    position: relative;
+  }
+
+  .history-entry:last-child { border-bottom: none; }
+
+  .history-left { padding-top: 2px; }
+
+  .h-company {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.2rem;
+  }
+
+  .h-period {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--sepia);
+    letter-spacing: 0.06em;
+  }
+
+  .h-role {
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .h-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.75;
+    margin-bottom: 0.9rem;
+  }
+
+  .h-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 0.7rem;
+  }
+
+  .h-chip {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--grid);
+    padding: 2px 8px;
+    background: rgba(244,243,238,0.6);
+  }
+
+  html[data-theme="dark"] .h-chip {
+    background: rgba(20,20,18,0.6);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    margin-top: 5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    text-align: center;
+  }
+
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  footer span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+
+  .copyright {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    margin-top: 0.6rem;
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,25,23,0.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    max-width: 760px;
+    width: 100%;
+    max-height: 86vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .modal-head-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .modal-head h2 {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .modal-github {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    padding: 4px 10px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .modal-github:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .modal-github svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  .modal-close {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--ink-faint);
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.15s;
+  }
+
+  .modal-close:hover { color: var(--accent); }
+
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 1rem 1.6rem 0;
+  }
+
+  .modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--rule);
+    margin-top: 1.2rem;
+  }
+
+  .modal-tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .modal-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .modal-tab-content {
+    display: none;
+    padding: 1.5rem 1.6rem 2rem;
+  }
+
+  .modal-tab-content.active { display: block; }
+
+  .modal-tab-content p {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .modal-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .modal-img-slot {
+    aspect-ratio: 4/3;
+    background: rgba(43,74,54,0.05);
+    border: 1px dashed var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .modal-img-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .modal-resume-body {
+    padding: 1.5rem 1.6rem 2rem;
+  }
+
+  .modal-resume-body p {
+    font-size: 14.5px;
+    color: var(--ink-light);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .modal-resume-preview {
+    border: 1px solid var(--rule);
+    background: rgba(43,74,54,0.03);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 680px) {
+    nav ul { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .history-entry { grid-template-columns: 1fr; gap: 0.4rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .modal-tabs { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-mark">S.Designation / Folio-2025</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#history">History</a></li>
+    <li>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+        <svg id="theme-icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none"><path d="M12 4.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 4.5Zm0 13.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 18Zm7.5-6a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75ZM6 12a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 6 12ZM17.03 6.97a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 1 1-1.06-1.06l1.06-1.061a.75.75 0 0 1 1.06 0ZM8.096 15.904a.75.75 0 0 1 0 1.06L7.03 17.97a.75.75 0 0 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.066 0ZM17.03 17.03a.75.75 0 0 1-1.06 0l-1.061-1.06a.75.75 0 1 1 1.06-1.06l1.061 1.06a.75.75 0 0 1 0 1.06ZM6.97 6.97a.75.75 0 0 1 1.06 0l1.06 1.061a.75.75 0 0 1-1.06 1.06L7.03 8.031a.75.75 0 0 1-.06-1.06ZM12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Z"/></svg>
+        <svg id="theme-icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75 9.75 9.75 0 0 1 8.25 6a9.72 9.72 0 0 1 .753-3.752A9.753 9.753 0 0 0 2.25 12a9.75 9.75 0 0 0 9.75 9.75 9.753 9.753 0 0 0 9.752-6.748Z"/></svg>
+        <span id="theme-label">Dark</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- PAGE WRAPPER -->
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <p class="hero-eyebrow">Mechanical Engineer · VIT Pune · 2028</p>
+    <h1>Shree<br>Designation.</h1>
+    <p class="hero-title">
+      B.Tech Mechanical Engineering — specialising in FEA, CFD,
+      simulation-based design, and ML-integrated engineering. Building
+      towards Formula 1, aerospace, and defence.
+    </p>
+    <div class="hero-links">
+      <a class="hero-link" href="https://twitter.com/yourhandle" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.213 5.567 5.95-5.567Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Twitter / X
+      </a>
+      <a class="hero-link" href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a class="hero-link" href="https://github.com/yourhandle" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="title-block" id="about">
+    <div class="tb-label">§ 01 — About</div>
+    <div class="tb-content">
+      <span>VIT Pune · B.Tech ME</span>
+      <span>CAE Research Affiliate</span>
+    </div>
+    <div class="tb-right">REV A</div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm <strong>Shree</strong> — a second-year mechanical engineering student at VIT Pune,
+        building at the intersection of simulation, ML, and physical design.
+        My work sits in the space between a CAD file and a finished analysis:
+        FEA, CFD, teardown methodology, and increasingly, software that
+        automates the pipeline between them.
+      </p>
+      <p>
+        Currently deep in CAE Research — teardown documentation, NVH modelling,
+        and powertrain vibration simulation. Outside academia, I'm developing
+        <strong>ForgeIQ</strong>, a web platform that converts STEP/SolidWorks files into
+        manufacturing cost estimates and production reports using AI.
+      </p>
+      <p>
+        Long-term targets: <strong>Formula 1</strong>, aerospace structures, or defence
+        systems — wherever simulation-driven design is pushing limits.
+      </p>
+    </div>
+    <div class="about-tags">
+      <div class="about-tag">Focus
+        <span>FEA · CFD · Simulation</span>
+      </div>
+      <div class="about-tag">Building
+        <span>ForgeIQ — AI Manufacturing Intelligence</span>
+      </div>
+      <div class="about-tag">Tools
+        <span>ANSYS · OpenFOAM · SolidWorks · Python</span>
+      </div>
+      <div class="about-tag">Research
+        <span>CAE Research, VIT Pune</span>
+      </div>
+      <div class="about-tag">Target
+        <span>F1 · Aerospace · Defence</span>
+      </div>
+      <div class="about-tag">Also
+        <span>Guitar · Calisthenics · Reading</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="title-block" id="portfolio">
+    <div class="tb-label">§ 02 — Portfolio</div>
+    <div class="tb-content">
+      <span>Selected Projects · click a card to expand</span>
+    </div>
+    <div class="tb-right">SHT 1 OF 1</div>
+  </div>
+
+  <div class="portfolio-grid" id="portfolio-grid"></div>
+
+  <!-- RESUME -->
+  <div class="title-block" id="resume">
+    <div class="tb-label">§ 03 — Resume</div>
+    <div class="tb-content"><span>Latest Version · click to preview</span></div>
+    <div class="tb-right">PDF</div>
+  </div>
+
+  <div class="resume-bar" onclick="openResume()">
+    <div class="resume-info">
+      <strong>Shree — Full Resume</strong>
+      shree_resume_2025.pdf · Replace this with your actual file
+    </div>
+    <a class="dl-btn-small" href="./shree_resume_2025.pdf" download onclick="event.stopPropagation()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+      Download CV
+    </a>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="title-block" id="photos">
+    <div class="tb-label">§ 04 — Field</div>
+    <div class="tb-content"><span>Company visits · click to view</span></div>
+    <div class="tb-right">IMG</div>
+  </div>
+
+  <div class="photo-grid" id="photo-grid"></div>
+
+  <!-- PROFESSIONAL HISTORY -->
+  <div class="title-block" id="history">
+    <div class="tb-label">§ 05 — History</div>
+    <div class="tb-content"><span>Professional &amp; Research Experience</span></div>
+    <div class="tb-right">REV B</div>
+  </div>
+
+  <div>
+
+    <div class="history-entry">
+      <div class="history-left">
+        <div class="h-company">CAE Research · VIT Pune</div>
+        <div class="h-period">Aug 2024 — Present</div>
+      </div>
+      <div>
+        <div class="h-role">Research Associate — CAE &amp; Simulation</div>
+        <div class="h-desc">
+          Teardown methodology research under Japanese GCC framework — producing
+          BOM taxonomies, VAVE documentation, and structured report formats.
+          Developed 6-DOF rigid body engine mount NVH simulation referencing
+          Ferrari 812 Superfast V12 powertrain data (MUNER project dataset).
+          Delivered LaTeX reports, Word documentation, and internal PowerPoint
+          decks for faculty and external review.
+        </div>
+        <div class="h-stack">
+          <span class="h-chip">ANSYS Mechanical</span>
+          <span class="h-chip">MATLAB</span>
+          <span class="h-chip">LaTeX</span>
+          <span class="h-chip">NVH</span>
+          <span class="h-chip">FEA</span>
+          <span class="h-chip">BOM Analysis</span>
+          <span class="h-chip">VAVE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-entry">
+      <div class="history-left">
+        <div class="h-company">BAJA Team · VIT Pune</div>
+        <div class="h-period">Jan 2024 — Jul 2024</div>
+      </div>
+      <div>
+        <div class="h-role">CAE Engineer</div>
+        <div class="h-desc">
+          Structural simulation and analysis for BAJA off-road vehicle — chassis
+          FEA under impact and torsion loading cases. Contributed to suspension
+          kinematics review and component weight optimisation. Gained hands-on
+          experience translating physical constraints into simulation boundary
+          conditions.
+        </div>
+        <div class="h-stack">
+          <span class="h-chip">ANSYS Mechanical</span>
+          <span class="h-chip">SolidWorks</span>
+          <span class="h-chip">Structural FEA</span>
+          <span class="h-chip">Topology Optimisation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-entry">
+      <div class="history-left">
+        <div class="h-company">Independent Research</div>
+        <div class="h-period">Jun 2023 — Dec 2023</div>
+      </div>
+      <div>
+        <div class="h-role">ML + Simulation Pipeline Development</div>
+        <div class="h-desc">
+          Built a DFT-ML material screening pipeline combining XGBoost models with
+          Materials Project and JARVIS-DFT data. Extended pipeline toward exotic
+          material phases with a C++/Python layered architecture and ALIGNN
+          fine-tuning. Parallel work on NACA airfoil CFD automation using PyFluent
+          scripting and an ML surrogate model for rapid parameter sweeps. Published
+          one conference paper from this period.
+        </div>
+        <div class="h-stack">
+          <span class="h-chip">XGBoost</span>
+          <span class="h-chip">ANSYS Fluent</span>
+          <span class="h-chip">PyFluent</span>
+          <span class="h-chip">Python</span>
+          <span class="h-chip">C++</span>
+          <span class="h-chip">Streamlit</span>
+          <span class="h-chip">OpenFOAM</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-row">
+      <span>Shree · VIT Pune · B.Tech Mechanical Engineering · 2028</span>
+      <span>FOLIO-2025 / DRG-01 / LAST MOD: 2025</span>
+    </div>
+    <div class="copyright">© 2025 Shree. All rights reserved.</div>
+  </footer>
+
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="project-modal" onclick="if(event.target===this) closeProjectModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <h2 id="modal-title"></h2>
+        <a id="modal-github-link" class="modal-github" href="#" target="_blank" rel="noopener" style="display:none">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          Repository
+        </a>
+      </div>
+      <button class="modal-close" onclick="closeProjectModal()">✕</button>
+    </div>
+    <div class="modal-tags" id="modal-tags"></div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-tab="problem" onclick="switchTab(this,'problem')">Problem Statement</button>
+      <button class="modal-tab" data-tab="procedure" onclick="switchTab(this,'procedure')">Procedure</button>
+      <button class="modal-tab" data-tab="result" onclick="switchTab(this,'result')">End Phase / Result</button>
+    </div>
+    <div class="modal-tab-content active" data-tab="problem">
+      <p id="modal-problem-text"></p>
+      <div class="modal-images" id="modal-problem-images"></div>
+    </div>
+    <div class="modal-tab-content" data-tab="procedure">
+      <p id="modal-procedure-text"></p>
+      <div class="modal-images" id="modal-procedure-images"></div>
+    </div>
+    <div class="modal-tab-content" data-tab="result">
+      <p id="modal-result-text"></p>
+      <div class="modal-images" id="modal-result-images"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESUME MODAL -->
+<div class="modal-overlay" id="resume-modal" onclick="if(event.target===this) closeResume()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Resume — Shree</h2>
+      <button class="modal-close" onclick="closeResume()">✕</button>
+    </div>
+    <div class="modal-resume-body">
+      <div class="modal-resume-preview">shree_resume_2025.pdf — preview placeholder<br>(embed an &lt;iframe&gt; or thumbnail here once the file is added)</div>
+      <p>B.Tech Mechanical Engineering, VIT Pune — FEA / CFD / Simulation-driven design. Full work history in §05 above.</p>
+      <a class="dl-btn" href="./shree_resume_2025.pdf" download>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+        Download CV
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO POPUP -->
+<div class="photo-popup-backdrop" id="photo-popup" onclick="if(event.target===this) closePhotoPopup()">
+  <div class="photo-popup-box">
+    <img id="photo-popup-img" src="" alt="">
+    <div class="photo-popup-caption" id="photo-popup-caption"></div>
+    <button class="photo-popup-close" onclick="closePhotoPopup()">✕</button>
+  </div>
+</div>
+
+<script>
+// ─── FIELD PHOTOS — replace URLs with your actual backend image paths ───
+const fieldPhotos = [
+  { label: "Company visit 01", url: "./images/1.jpg" },
+  { label: "Company visit 02", url: "./images/2.jpg" },
+  { label: "Company visit 03", url: "./images/3.jpg" },
+  { label: "Company visit 04", url: "./images/4.jpg" },
+];
+
+(function buildPhotoGrid() {
+  const grid = document.getElementById('photo-grid');
+  fieldPhotos.forEach((photo) => {
+    const slot = document.createElement('div');
+    slot.className = 'photo-slot';
+
+    // placeholder icon + label (hidden once image loads)
+    const icon = document.createElement('div');
+    icon.className = 'slot-icon';
+    icon.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+
+    const label = document.createElement('div');
+    label.className = 'slot-label';
+    label.textContent = photo.label;
+
+    // expand icon shown on hover
+    const expand = document.createElement('div');
+    expand.className = 'slot-expand';
+    expand.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    // caption bar at bottom
+    const caption = document.createElement('div');
+    caption.className = 'slot-caption';
+    caption.textContent = photo.label;
+
+    slot.appendChild(icon);
+    slot.appendChild(label);
+    slot.appendChild(expand);
+    slot.appendChild(caption);
+    grid.appendChild(slot);
+
+    // load image from backend
+    const img = new Image();
+    img.alt = photo.label;
+
+    img.onload = () => {
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+      slot.insertBefore(img, slot.firstChild);
+      icon.style.display = 'none';
+      label.style.display = 'none';
+      caption.style.display = 'block';
+      // click opens popup
+      slot.addEventListener('click', () => openPhotoPopup(photo.url, photo.label));
+    };
+
+    img.onerror = () => {
+      label.textContent = photo.label + ' — failed to load';
+      slot.style.cursor = 'default';
+    };
+
+    img.src = photo.url;
+  });
+})();
+
+function openPhotoPopup(url, label) {
+  document.getElementById('photo-popup-img').src = url;
+  document.getElementById('photo-popup-img').alt = label;
+  document.getElementById('photo-popup-caption').textContent = label;
+  document.getElementById('photo-popup').classList.add('open');
+}
+
+function closePhotoPopup() {
+  document.getElementById('photo-popup').classList.remove('open');
+  setTimeout(() => { document.getElementById('photo-popup-img').src = ''; }, 250);
+}
+
+// ─── PROJECT DATA ───
+const projects = [
+  {
+    id: "forgeiq",
+    title: "ForgeIQ",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["FastAPI", "React", "CadQuery", "AI"],
+    desc: "AI manufacturing intelligence platform. STEP/SolidWorks → cost estimation, DFM analysis, production reports.",
+    problem: "Manufacturers and student teams lack a fast way to estimate machining/production cost directly from a CAD file — quoting is manual, slow, and inconsistent.",
+    procedure: "Built a FastAPI backend using CadQuery to parse STEP/SolidWorks geometry, extract features (volume, surface area, hole count, bounding box), and feed them into a cost-estimation model. React frontend for upload, visualization, and report generation.",
+    result: "Working pipeline that takes a STEP file and returns a structured cost + DFM report in seconds. Currently expanding material and process libraries.",
+    images: { problem: [], procedure: [], result: [] }
+  },
+  {
+    id: "nvh-model",
+    title: "6-DOF Engine Mount NVH Model",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["ANSYS", "MATLAB", "FEA"],
+    desc: "Rigid body powertrain vibration simulation. Ferrari 812 V12 dataset (MUNER). Modal analysis and frequency response.",
+    problem: "Powertrain-induced NVH is a major contributor to cabin noise/vibration; mount stiffness and placement need to be tuned before physical prototyping.",
+    procedure: "Modelled the powertrain as a 6-DOF rigid body supported on mounts, using Ferrari 812 Superfast V12 dataset (MUNER project) for mass/inertia properties. Performed modal analysis and frequency response in MATLAB, cross-checked against ANSYS Mechanical FEA.",
+    result: "Identified critical mount stiffness combinations that minimise resonance overlap with engine firing frequencies. Documented in internal report.",
+    images: { problem: [], procedure: [], result: [] }
+  },
+  {
+    id: "telemetry",
+    title: "BAJA / FSAE Telemetry + ML",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["RPi Pico", "PyTorch", "Plotly"],
+    desc: "Real-time telemetry pipeline with GPS/IMU/vibration. PINN with ANSYS-embedded loss constraints. Plotly Dash dashboard.",
+    problem: "Need real-time on-vehicle sensing (GPS, IMU, vibration) with a model that can predict structural response without running full FEA live.",
+    procedure: "Built sensor pipeline on Raspberry Pi Pico, streaming GPS/IMU/vibration data. Trained a Physics-Informed Neural Network (PINN) in PyTorch with loss terms derived from ANSYS simulation results. Visualised live data via a Plotly Dash dashboard.",
+    result: "Functional telemetry + PINN prototype giving near-real-time stress/vibration estimates correlated with on-track sensor data.",
+    images: { problem: [], procedure: [], result: [] }
+  },
+  {
+    id: "dft-ml",
+    title: "DFT-ML Material Screening",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["XGBoost", "Streamlit", "DFT"],
+    desc: "XGBoost screening pipeline on Materials Project / JARVIS-DFT data. Streamlit interface. ALIGNN fine-tuning for exotic phases.",
+    problem: "Screening candidate materials via full DFT calculations is computationally expensive; need a fast ML pre-filter.",
+    procedure: "Built an XGBoost regression/classification pipeline trained on Materials Project and JARVIS-DFT datasets, wrapped in a Streamlit interface for interactive screening. Extended toward exotic material phases via ALIGNN fine-tuning, with a C++/Python layered architecture for performance.",
+    result: "Reduced candidate material shortlisting time significantly; one conference paper published from this work.",
+    images: { problem: [], procedure: [], result: [] }
+  },
+  {
+    id: "airfoil-cfd",
+    title: "NACA Airfoil CFD Pipeline",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["Fluent", "PyFluent", "ML Surrogate"],
+    desc: "ANSYS Fluent SST k-ω automated sweep. PyFluent scripting. ML surrogate model for rapid AoA / Re parameter space exploration.",
+    problem: "Manually running CFD for every angle-of-attack / Reynolds-number combination is too slow for exploring large parameter spaces.",
+    procedure: "Automated ANSYS Fluent SST k-ω simulations across AoA/Re sweeps using PyFluent scripting. Trained an ML surrogate model on the resulting lift/drag data to interpolate across the parameter space without re-running CFD.",
+    result: "Surrogate model reproduces CFD-sweep lift/drag trends closely, cutting exploration time from hours to seconds per query point.",
+    images: { problem: [], procedure: [], result: [] }
+  },
+  {
+    id: "vapor-chamber",
+    title: "Vapor Chamber Patent",
+    github: "https://github.com/yourusername/repository-name",
+    tags: ["ANSYS", "Thermal", "Patent"],
+    desc: "Ultra-thin modular vapor chamber for M.2 NVMe SSDs. Bimodal wick architecture. ANSYS thermal simulation baseline. In drafting.",
+    problem: "M.2 NVMe SSDs throttle under sustained load due to limited thermal dissipation area in thin form factors.",
+    procedure: "Designed an ultra-thin modular vapor chamber with a bimodal wick architecture for improved capillary action. Built an ANSYS thermal simulation baseline to validate heat spreading performance before prototyping.",
+    result: "Simulation baseline complete; patent application currently in drafting.",
+    images: { problem: [], procedure: [], result: [] }
+  }
+];
+
+const pgrid = document.getElementById('portfolio-grid');
+projects.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'portfolio-card';
+  card.onclick = () => openProjectModal(p.id);
+  card.innerHTML = `
+    <span class="pc-number">PRJ-${String(i+1).padStart(3,'0')}</span>
+    <div class="pc-title">${p.title}</div>
+    <div class="pc-desc">${p.desc}</div>
+    <div class="pc-tags">${p.tags.map(t => `<span class="pc-tag">${t}</span>`).join('')}</div>
+    <span class="pc-arrow">↗</span>
+  `;
+  pgrid.appendChild(card);
+});
+
+function renderImages(containerId, images) {
+  const el = document.getElementById(containerId);
+  if (!images || images.length === 0) {
+    el.innerHTML = '<div class="modal-img-slot">Add images here</div>';
+    return;
+  }
+  el.innerHTML = images.map(src => `<div class="modal-img-slot"><img src="${src}" alt=""></div>`).join('');
+}
+
+function openProjectModal(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="pc-tag">${t}</span>`).join('');
+  document.getElementById('modal-problem-text').textContent = p.problem;
+  document.getElementById('modal-procedure-text').textContent = p.procedure;
+  document.getElementById('modal-result-text').textContent = p.result;
+  renderImages('modal-problem-images', p.images.problem);
+  renderImages('modal-procedure-images', p.images.procedure);
+  renderImages('modal-result-images', p.images.result);
+  const ghLink = document.getElementById('modal-github-link');
+  if (p.github) {
+    ghLink.href = p.github;
+    ghLink.style.display = 'inline-flex';
+  } else {
+    ghLink.style.display = 'none';
+  }
+  document.querySelectorAll('#project-modal .modal-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+  document.querySelectorAll('#project-modal .modal-tab-content').forEach((c, i) => c.classList.toggle('active', i === 0));
+  document.getElementById('project-modal').classList.add('open');
+}
+
+function closeProjectModal() {
+  document.getElementById('project-modal').classList.remove('open');
+}
+
+function switchTab(btn, tab) {
+  document.querySelectorAll('#project-modal .modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#project-modal .modal-tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelector(`#project-modal .modal-tab-content[data-tab="${tab}"]`).classList.add('active');
+}
+
+function openResume() {
+  document.getElementById('resume-modal').classList.add('open');
+}
+
+function closeResume() {
+  document.getElementById('resume-modal').classList.remove('open');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeProjectModal();
+    closeResume();
+    closePhotoPopup();
+  }
+});
+
+// ─── DARK / LIGHT TOGGLE ───
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('portfolio-theme', next);
+  updateToggleUI(next);
+}
+
+function updateToggleUI(theme) {
+  document.getElementById('theme-icon-sun').style.display  = theme === 'dark' ? 'block' : 'none';
+  document.getElementById('theme-icon-moon').style.display = theme === 'dark' ? 'none'  : 'block';
+  document.getElementById('theme-label').textContent       = theme === 'dark' ? 'Light' : 'Dark';
+}
+
+(function() {
+  const saved = localStorage.getItem('portfolio-theme');
+  const preferred = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', preferred);
+  updateToggleUI(preferred);
+})();
+</script>
+
+</body>
+</html>
